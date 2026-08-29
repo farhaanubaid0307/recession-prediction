@@ -1,0 +1,13 @@
+﻿Feature,Construction,Economic Rationale
+SPREAD,"GS10 − TB3MS (level, pp)",Yield-curve inversion — the canonical Estrella & Mishkin (1998) signal
+UNRATE_CHG12,UNRATE − UNRATE (12 months earlier),Rising unemployment momentum
+SAHM_GAP,3-mo avg UNRATE − min of that avg over prior 12 months,Sahm (2019) real-time recession trigger (≥ 0.5pp)
+INDPRO_YOY,12-month % change,Manufacturing / real-activity momentum
+UMCSENT_LEVEL,Index level,Household confidence
+UMCSENT_CHG6,6-month change,Confidence momentum
+CPI_YOY,12-month % change,Inflation regime; policy-tightening pressure
+PERMIT_YOY,12-month % change,Housing leads the cycle
+CLAIMS_YOY,"Monthly-avg weekly claims, 12-month % change",Highest-frequency labor-stress signal
+CREDIT_SPREAD,"BAA10YM (level, pp)",Corporate credit stress
+EQUITY_RET6,"NASDAQ Composite, 6-month % return",Forward-looking market prices
+FEDFUNDS_CHG12,12-month change (pp),Monetary-tightening stance

@@ -1,0 +1,4 @@
+﻿Column,Definition
+TARGET_3M,1 if any of months t+1…t+3 is an NBER recession month
+TARGET_6M,1 if any of months t+1…t+6 is an NBER recession month
+TARGET_12M,1 if any of months t+1…t+12 is an NBER recession month

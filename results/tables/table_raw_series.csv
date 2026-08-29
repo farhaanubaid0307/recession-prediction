@@ -1,0 +1,13 @@
+﻿Variable,FRED Code,Economic Rationale,Frequency
+NBER recession indicator (target),USREC,Ground-truth binary label (1 = recession month),Monthly
+10-Year Treasury yield,GS10,Long end of the yield curve; input to SPREAD,Monthly
+3-Month Treasury bill rate,TB3MS,Short end of the yield curve; input to SPREAD,Monthly
+Civilian unemployment rate,UNRATE,"Labor-market slack; input to UNRATE_CHG12, SAHM_GAP",Monthly
+Industrial production index,INDPRO,Real physical output momentum,Monthly
+U. Michigan consumer sentiment,UMCSENT,Forward-looking household confidence,Monthly
+"CPI, all urban consumers",CPIAUCSL,Inflation regime / policy-tightening pressure,Monthly
+New private housing permits,PERMIT,Housing leads the business cycle,Monthly
+Initial jobless claims,ICSA,Highest-frequency labor-stress signal,Weekly (monthly mean)
+Moody's Baa yield minus 10Y Treasury,BAA10YM,Corporate credit stress,Monthly
+NASDAQ Composite index,NASDAQCOM,Forward-looking equity-market prices,Daily (month-end)
+Effective federal funds rate,FEDFUNDS,Monetary-policy stance,Monthly

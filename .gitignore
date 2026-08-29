@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.ruff_cache/
+*.docx
+
+# editors / OS
+.vscode/
+.DS_Store
+
+# venv
+.venv/
+venv/
