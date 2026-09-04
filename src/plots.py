@@ -10,6 +10,7 @@ matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
 import pandas as pd
+from pandas.tseries.offsets import DateOffset
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import roc_auc_score, roc_curve
 
@@ -108,9 +109,15 @@ def fig_roc(preds: pd.DataFrame) -> None:
 
 
 def fig_importance(df: pd.DataFrame) -> None:
-    data = df.dropna(subset=[f"TARGET_{HORIZON}M"])
-    X, y = data[FEATURES], data[f"TARGET_{HORIZON}M"].astype(int)
-    rf = RandomForestClassifier(n_estimators=500, min_samples_leaf=5,
+    """Importances from the same fit that produces Table 3: training data
+    only, ending HORIZON months before the split, max_depth=6. Fitting on
+    the full sample instead would rank the features off data the model was
+    never allowed to see."""
+    target = f"TARGET_{HORIZON}M"
+    train_end = pd.Timestamp(SPLIT_DATE) - DateOffset(months=HORIZON)
+    data = df.dropna(subset=[target]).loc[:train_end]
+    X, y = data[FEATURES], data[target].astype(int)
+    rf = RandomForestClassifier(n_estimators=500, max_depth=6, min_samples_leaf=5,
                                 class_weight="balanced", random_state=42).fit(X, y)
     imp = pd.Series(rf.feature_importances_ * 100, index=FEATURES).sort_values()
     fig, ax = plt.subplots(figsize=(8, 5))

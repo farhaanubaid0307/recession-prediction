@@ -1,0 +1,3 @@
+*.docx binary diff=astextplain
+*.pdf  binary
+*.png  binary

@@ -27,7 +27,11 @@ def to_monthly(s: pd.Series, freq: str) -> pd.Series:
     CPI have a genuine hole at 2025-10 (the government shutdown canceled
     that month's data collection), and a single missing month would
     otherwise poison rolling-window features for over a year. Ends are
-    never extrapolated."""
+    never extrapolated.
+
+    Note this interpolation runs before the publication lag, so a filled
+    month borrows from the month after it. That is a small look-ahead,
+    confined to the two gap months at the tail of the sample."""
     if freq == "M":
         out = s.asfreq("MS") if s.index.freq else s.resample("MS").first()
     else:
@@ -80,8 +84,9 @@ def build_dataset() -> pd.DataFrame:
         df[f"TARGET_{h}M"] = forward_recession(raw["USREC"], h)
 
     df = df.loc[SAMPLE_START:]
-    # Keep rows with complete features; targets may be NaN at the sample end
-    # (those rows are still needed for the dashboard's live nowcast).
+    # Keep rows with complete features. Targets are NaN for the last h months,
+    # where the forward window runs past the end of the data; evaluate.py drops
+    # those per horizon rather than here, so one dataset serves all horizons.
     df = df.dropna(subset=FEATURES)
     df.index.name = "date"
     return df
@@ -94,7 +99,7 @@ def main() -> None:
     df.to_csv(out)
     n_rec = int(df["USREC"].sum())
     print(f"Dataset: {len(df)} months, {df.index.min().date()} -> {df.index.max().date()}")
-    print(f"Recession months: {n_rec} ({n_rec / len(df):.1%}) — class imbalance is real.")
+    print(f"Recession months: {n_rec} ({n_rec / len(df):.1%}). Class imbalance is real.")
     print(f"Saved {out}")
 
 

@@ -10,7 +10,7 @@ FIGURES_DIR = RESULTS_DIR / "figures"
 FRED_CSV_URL = "https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"
 
 # All series are downloadable without an API key via fredgraph.csv.
-# freq: native frequency (M=monthly, W=weekly, D=daily) — everything is
+# freq: native frequency (M=monthly, W=weekly, D=daily). Everything is
 # resampled to monthly in features.py.
 SERIES = {
     "USREC":    {"name": "NBER recession indicator (target)", "freq": "M"},
@@ -37,10 +37,6 @@ HORIZONS = [3, 6, 12]
 # Single chronological train/test split. Training covers the 1990-91 and
 # 2001 recessions; the test period covers 2008 and 2020.
 SPLIT_DATE = "2006-01-01"
-
-# GFC case study: train through this date, test on the window below.
-GFC_TRAIN_END = "2006-12-01"
-GFC_TEST_START, GFC_TEST_END = "2007-01-01", "2009-12-01"
 
 FEATURES = [
     "SPREAD",          # GS10 - TB3MS yield spread (level)

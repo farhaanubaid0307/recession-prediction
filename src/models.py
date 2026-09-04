@@ -1,6 +1,6 @@
 """Model zoo: two traditional benchmarks and three ML models.
 
-The deliberate ladder (see PLAN.md §1.2):
+The deliberate ladder:
   probit (1 variable)  ->  logit (all variables, linear)  ->  RF / XGBoost
                                                                (nonlinear)
 If logit beats probit, the gain came from richer information; if the tree
@@ -19,8 +19,12 @@ from xgboost import XGBClassifier
 class ProbitSpread:
     """Estrella & Mishkin (1998): probit on the yield spread alone.
 
-    The canonical 'traditional indicator' benchmark — the same functional
+    The canonical 'traditional indicator' benchmark, the same functional
     form behind the New York Fed's published recession probabilities.
+
+    Left unweighted, as Estrella and Mishkin specify it. The three ML models
+    below are class-balanced, so ROC-AUC and PR-AUC compare like with like
+    but the 0.5-threshold metrics do not.
     """
 
     def fit(self, X: pd.DataFrame, y: pd.Series):
@@ -53,10 +57,10 @@ class SahmRule:
 
 
 def make_models(y_train: pd.Series) -> dict:
-    """Fresh model instances per walk-forward step.
+    """Build a fresh set of models for one training window.
 
-    XGBoost's scale_pos_weight depends on the class balance of the current
-    training window, so models are rebuilt rather than reused.
+    XGBoost's scale_pos_weight depends on the class balance of the window it
+    is given, so the models are constructed per fit rather than reused.
     """
     pos = max(int(np.sum(y_train)), 1)
     neg = len(y_train) - pos
