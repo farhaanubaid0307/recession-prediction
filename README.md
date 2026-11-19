@@ -1,6 +1,6 @@
 # prediction of US recessions with ml
 
-ml project meant to beat the yield curve at forecasting recessions, six months in advance.
+Ml project meant to beat the yield curve at forecasting recessions, six months in advance.
 
 Twelve monthly FRED indicators from 1985-2026.
 Five models: the Estrella-Mishkin yield-curve probit, the Sahm Rule, logistic regression, a random forest, and XGBoost.
