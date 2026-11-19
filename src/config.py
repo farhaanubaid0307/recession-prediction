@@ -11,7 +11,7 @@ FRED_CSV_URL = "https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"
 
 # All series are downloadable without an API key via fredgraph.csv.
 # freq: native frequency (M=monthly, W=weekly, D=daily). Everything is
-# resampled to monthly in features.py.
+# resampled to monthly in features.py 
 SERIES = {
     "USREC":    {"name": "NBER recession indicator (target)", "freq": "M"},
     "GS10":     {"name": "10-Year Treasury constant maturity rate", "freq": "M"},
