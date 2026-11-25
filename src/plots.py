@@ -90,6 +90,30 @@ def fig_probabilities(preds: pd.DataFrame, usrec: pd.Series) -> None:
     plt.close(fig)
 
 
+def fig_probabilities_paper(preds: pd.DataFrame, usrec: pd.Series) -> None:
+    """Figure 1 of the 4-page FSJ paper: the same series as
+    fig_probabilities, drawn at printed size (6 x 3 in, 300 dpi) in Times
+    New Roman with the legend below the axes so it hides no data."""
+    names = {"Probit (yield spread)": "Probit (yield spread)", "Logistic Regression": "Logistic regression",
+             "Random Forest": "Random forest", "XGBoost": "XGBoost"}
+    with plt.rc_context({"font.family": "serif", "font.serif": ["Times New Roman", "DejaVu Serif"],
+                         "font.size": 9}):
+        fig, ax = plt.subplots(figsize=(6, 3))
+        shade_recessions(ax, usrec.loc[preds.index.min():preds.index.max()])
+        for name in names:
+            ax.plot(preds.index, preds[name], label=names[name], lw=1.0,
+                    color=COLORS[name], ls=STYLES[name])
+        ax.axhline(0.5, color="0.3", lw=0.8, ls=":")
+        ax.set_ylim(0, 1)
+        ax.set_xlim(preds.index.min(), preds.index.max())
+        ax.set_ylabel("P(recession within 6 months)")
+        ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.1), ncol=4, frameon=False, fontsize=9)
+        fig.tight_layout()
+        fig.savefig(FIGURES_DIR / "fig2_oos_probabilities_h6_paper.png", dpi=300,
+                    bbox_inches="tight", pad_inches=0.03)
+        plt.close(fig)
+
+
 def fig_roc(preds: pd.DataFrame) -> None:
     y = preds["target"].to_numpy()
     fig, ax = plt.subplots(figsize=(6, 6))
@@ -164,10 +188,11 @@ def main() -> None:
 
     fig_series_panel(df)
     fig_probabilities(preds, df["USREC"])
+    fig_probabilities_paper(preds, df["USREC"])
     fig_roc(preds)
     fig_importance(df)
     fig_gfc(preds)
-    print(f"Wrote 5 figures to {FIGURES_DIR}")
+    print(f"Wrote 6 figures to {FIGURES_DIR}")
 
 
 if __name__ == "__main__":

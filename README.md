@@ -36,9 +36,9 @@ December, the month the recession actually started. Logistic regression crossed 
 December. XGBoost went from 0.015 in December 2007 to 0.976 in January 2008, a month after the
 thing had already begun.
 
-The probit's 0.457 is not the yield curve going quiet. It has one sustained run above 0.50 in twenty
-test years, 21 months from January 2023 to October 2024 peaking at 0.734, and every one of them was
-wrong. That run is the 2022-23 inversion no recession followed. It is visible in the chart above,
+The probit's 0.457 is not the yield curve going quiet. It sits above 0.50 for 21 months between
+January 2023 and October 2024 (dipping to 0.499 in November 2023), peaking at 0.734, and every one of
+them was wrong. That run is the 2022-23 inversion no recession followed. It is visible in the chart above,
 the grey dashed line sitting over the cutoff on the right.
 
 The 0.885 deserves some suspicion too. A moving-block bootstrap over the test months puts it at 0.746
@@ -61,6 +61,7 @@ python -m src.evaluate    # fits and scores the five models
 python -m src.tables      # regenerates Tables 1 to 3
 python -m src.plots       # regenerates the figures
 python -m pytest tests/   # leakage and publication-lag checks
+python -m src.verify_paper  # recomputes every number quoted in the FSJ paper, PASS/FAIL each
 ```
 
 Deterministic: same data in, same numbers out. About 12 minutes end to end on a laptop.
